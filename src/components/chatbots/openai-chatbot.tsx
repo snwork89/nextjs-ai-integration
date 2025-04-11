@@ -13,7 +13,11 @@ export default function OpenAIChatbot() {
     id: "openai", // Add a unique ID to maintain separate chat state
   })
 
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
 
   return (
     <div className="flex flex-col h-[60vh]">
@@ -30,7 +34,7 @@ export default function OpenAIChatbot() {
               </div>
             </div>
           ))}
-          
+            <div ref={messagesEndRef}/>
         </div>
       </ScrollArea>
 
