@@ -13,20 +13,24 @@ export default function OpenAIChatbot() {
     id: "openai", // Add a unique ID to maintain separate chat state
   })
 
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
 
 
-  console.log("messages is",messages);
   return (
     <div className="flex flex-col h-[60vh]">
       <ScrollArea className="flex-1 p-4 mb-4 border rounded-md">
         <div className="space-y-4">
-         
-          <div ref={messagesEndRef} />
+        {messages.map((message) => (
+            <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                className={`max-w-[80%] rounded-lg px-4 py-2 ${
+                  message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
+                }`}
+              >
+                {message.content}
+              </div>
+            </div>
+          ))}
+          
         </div>
       </ScrollArea>
 
