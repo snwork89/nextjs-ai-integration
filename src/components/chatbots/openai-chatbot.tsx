@@ -9,7 +9,7 @@ import { Send } from "lucide-react";
 import { stat } from "fs";
 
 export default function OpenAIChatbot() {
-  const { messages, input, handleInputChange, handleSubmit, status,error } =
+  const { messages, input, handleInputChange, handleSubmit, status,error,isLoading } =
     useChat({
       api: "/api/chat/openai",
       id: "openai", // Add a unique ID to maintain separate chat state
@@ -21,6 +21,7 @@ export default function OpenAIChatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  console.log("iusLoading",isLoading);
 
   return (
     <div className="flex flex-col h-[60vh]">
@@ -30,7 +31,7 @@ export default function OpenAIChatbot() {
         </div>
       )}
       <ScrollArea className="flex-1 p-4 mb-4 border rounded-md">
-     
+
         <div className="space-y-4">
           {messages.map((message) => (
             <div
@@ -50,6 +51,15 @@ export default function OpenAIChatbot() {
               </div>
             </div>
           ))}
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="bg-muted px-4 py-2 rounded-lg flex space-x-1 items-center">
+                <span className="w-2 h-2 bg-gray-600 rounded-full animate-bounce [animation-delay:0ms]" />
+                <span className="w-2 h-2 bg-gray-600 rounded-full animate-bounce [animation-delay:150ms]" />
+                <span className="w-2 h-2 bg-gray-600 rounded-full animate-bounce [animation-delay:300ms]" />
+              </div>
+            </div>
+          )}
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
