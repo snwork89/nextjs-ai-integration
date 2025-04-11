@@ -21,9 +21,16 @@ export default function OpenAIChatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+
   return (
     <div className="flex flex-col h-[60vh]">
+       {error && (
+        <div style={{ color: "red", marginTop: "10px" }}>
+          Error: {error.message}
+        </div>
+      )}
       <ScrollArea className="flex-1 p-4 mb-4 border rounded-md">
+     
         <div className="space-y-4">
           {messages.map((message) => (
             <div

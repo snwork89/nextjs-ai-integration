@@ -9,10 +9,16 @@ export async function POST(req: Request) {
   
   const { messages } = await req.json()
   
-  const result = streamText({
-    model: openai("gpt-4o"),
-    messages,
-  })
+  try{
+    const result = streamText({
+      model: openai("gpt-4o"),
+      messages,
+    })
+  
+    return result.toDataStreamResponse()
+  }
+  catch(err){
+    console.log("err is",err)
+  }
 
-  return result.toDataStreamResponse()
 }
