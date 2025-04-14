@@ -9,11 +9,18 @@ import { Send } from "lucide-react";
 import { stat } from "fs";
 
 export default function OpenAIChatbot() {
-  const { messages, input, handleInputChange, handleSubmit, status,error,isLoading } =
-    useChat({
-      api: "/api/chat/gemini",
-      id: "gemini", // Add a unique ID to maintain separate chat state
-    });
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    status,
+    error,
+    isLoading,
+  } = useChat({
+    api: "/api/chat/gemini",
+    id: "gemini", // Add a unique ID to maintain separate chat state
+  });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -21,17 +28,16 @@ export default function OpenAIChatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  console.log("iusLoading",isLoading);
+  console.log("iusLoading", isLoading);
 
   return (
     <div className="flex flex-col h-[60vh]">
-       {error && (
+      {error && (
         <div style={{ color: "red", marginTop: "10px" }}>
           Error: {error.message}
         </div>
       )}
       <ScrollArea className="flex-1 p-4 mb-4 border rounded-md">
-
         <div className="space-y-4">
           {messages.map((message) => (
             <div
@@ -52,14 +58,37 @@ export default function OpenAIChatbot() {
             </div>
           ))}
           {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-muted px-4 py-2 rounded-lg flex space-x-1 items-center">
-                <span className="w-2 h-2 bg-gray-600 rounded-full animate-bounce [animation-delay:0ms]" />
-                <span className="w-2 h-2 bg-gray-600 rounded-full animate-bounce [animation-delay:150ms]" />
-                <span className="w-2 h-2 bg-gray-600 rounded-full animate-bounce [animation-delay:300ms]" />
-              </div>
+            <div className="relative w-12 h-12">
+              {[...Array(8)].map((_, i) => (
+                <span
+                  key={i}
+                  className="absolute top-1/2 left-1/2 w-2 h-2 bg-gray-600 rounded-full animate-gemini"
+                  style={{
+                    transform: `rotate(${i * 45}deg) translate(20px)`,
+                    animationDelay: `${i * 0.1}s`,
+                  }}
+                />
+              ))}
+
+              <style jsx>{`
+                @keyframes gemini {
+                  0%,
+                  100% {
+                    transform: scale(1);
+                    opacity: 0.3;
+                  }
+                  50% {
+                    transform: scale(1.5);
+                    opacity: 1;
+                  }
+                }
+                .animate-gemini {
+                  animation: gemini 1s infinite ease-in-out;
+                }
+              `}</style>
             </div>
           )}
+
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
@@ -69,10 +98,10 @@ export default function OpenAIChatbot() {
           value={input}
           onChange={handleInputChange}
           placeholder="Type your message..."
-          disabled={status=="streaming"}
+          disabled={status == "streaming"}
           className="flex-1"
         />
-        <Button type="submit" size="icon" disabled={status=="streaming"}>
+        <Button type="submit" size="icon" disabled={status == "streaming"}>
           <Send className="h-4 w-4" />
         </Button>
       </form>
