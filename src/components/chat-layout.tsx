@@ -24,7 +24,7 @@ export default function ChatLayout({ children }: { children: React.ReactNode }) 
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="openai">OpenAI</TabsTrigger>
           <TabsTrigger value="gemini">Gemini</TabsTrigger>
-          <TabsTrigger value="cursor">Cursor</TabsTrigger>
+          <TabsTrigger value="claude">Claude</TabsTrigger>
         </TabsList>
 
         <div className="mt-4">{children}</div>
