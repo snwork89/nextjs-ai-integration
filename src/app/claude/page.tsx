@@ -1,17 +1,17 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import CursorChatbot from "@/components/chatbots/cursor-chatbot"
+import ClaudeChatbot from "@/components/chatbots/claude-chatbot"
 
 export default function CursorPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Cursor Chat</CardTitle>
-        <CardDescription>Chat with Cursor AI</CardDescription>
+        <CardTitle>Claude Chat</CardTitle>
+        <CardDescription>Chat with Claude AI</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
-        <CursorChatbot />
+        <ClaudeChatbot />
       </CardContent>
     </Card>
   )
